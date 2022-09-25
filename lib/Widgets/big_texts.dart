@@ -11,6 +11,7 @@ BigTexts({ Key? key, this.color = const Color(0xFF332d2b),  required this.text, 
   Widget build(BuildContext context){
     return Text(
       text,
+      maxLines: 1,
       overflow: overFlow,
       style: TextStyle(
         fontFamily: 'Roboto',
