@@ -3,6 +3,8 @@ import 'package:food_app/Widgets/big_texts.dart';
 import 'package:food_app/Widgets/icon_and_text.dart';
 import 'package:food_app/Widgets/small_text.dart';
 import 'package:food_app/utils/colors.dart';
+import 'package:dots_indicator/dots_indicator.dart';
+import 'package:food_app/utils/dimensions.dart';
 
 class FoodPageBody extends StatefulWidget {
   const FoodPageBody({ Key? key }) : super(key: key);
@@ -35,21 +37,68 @@ class _FoodPageBodyState extends State<FoodPageBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 320,
-      child: PageView.builder(
-        controller: pageController,
-        itemCount: 5,
-        itemBuilder: (context, position){
-          return _buildPageItem(
-            position
-          );
-        } )
-    );
+    return Column(
+      children: [
+        Container(
+          height: 320,
+          child: PageView.builder(
+            controller: pageController,
+            itemCount: 5,
+            itemBuilder: (context, position){
+              return _buildPageItem(
+                position
+              );
+            } 
+          )
+        ),
+        new DotsIndicator(
+          dotsCount: 5,
+          position: currPageValue,
+          decorator: DotsDecorator(
+            activeColor: AppColors.mainColor,
+            size: const Size.square(9.0),
+            activeSize: const Size(18.0, 9.0),
+            activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.   circular(5.0)),
+          ),
+        ),
+        SizedBox(height: 30),
+        Container(
+          margin: EdgeInsets.only(left:30),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              BigTexts(text: 'Popular'),
+              SizedBox(
+                width: 10,
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 3),
+                child: BigTexts(text: '.', color:Colors.black26)
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Container(
+                child: SmallText(text: 'Food pairing')
+              )
+            ],
+          ),
+        ),
+        ListView.builder(
+          itemCount: 10,
+          itemBuilder: (context, index){
+            return Container(
+              margin : EdgeInsets.only(left: 20, right:20),
+              child:
+            )
+          }
+        )
+      ],
+    );;
   }
 
   Widget _buildPageItem (int index){
-    var height = 220;
+    var height = Dimensions.pageViewContainer;
     Matrix4 matrix = new Matrix4.identity();
     if (index == currPageValue.floor()){
       var CurrScale = 1-(currPageValue-index) * (1- scaleFactor);
@@ -74,7 +123,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
       child: Stack(
         children: [
           Container(
-            height: 220,
+            height: Dimensions.pageViewContainer,
             margin: EdgeInsets.only(left: 10, right:10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
@@ -90,7 +139,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: 120,
+              height: Dimensions.pageViewTextContainer,
               margin: EdgeInsets.only(left: 30, right:30, bottom: 30),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
